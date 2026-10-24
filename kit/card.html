@@ -37,10 +37,13 @@
       <a class="line" id="mail" href="#" style="display:none"><span id="emailtext"></span><small>Email me</small></a>
     </div>
     <div id="noname" style="display:none">
-      <p class="fineprint" style="font-size:13px">This link is missing the rep's details. Enter their cell number to text them:</p>
+      <p class="fineprint" style="font-size:13px">Type what your rep wrote on your sheet:</p>
+      <label for="repnamein">Rep's name</label>
+      <input id="repnamein" type="text" placeholder="Their name">
       <label for="repnum">Rep's cell number</label>
       <input id="repnum" type="tel" placeholder="602-555-0123">
-      <a class="big" id="textfallback" href="#">Text My Rep</a>
+      <a class="big" id="savefallback" href="#">Save Their Contact<small>Opens a contact card - tap Add or Done to keep it</small></a>
+      <a class="big" id="textfallback" href="#" style="background:#fff;color:var(--navy);border:1.5px solid var(--navy);">Text My Rep Instead</a>
     </div>
     <div id="textblock">
       <label for="hname">Your name (optional)</label>
@@ -69,6 +72,20 @@
       if (d.length === 10) d = '1' + d;
       if (!d) { ev.preventDefault(); alert('Please enter the rep\'s cell number.'); return; }
       this.href = smsHref('+' + d, 'Hi, this is the homeowner you just met with about my roof.');
+    });
+    document.getElementById('savefallback').addEventListener('click', function(ev){
+      var n = document.getElementById('repnamein').value.trim();
+      var d = document.getElementById('repnum').value.replace(/\D/g,'');
+      if (d.length === 10) d = '1' + d;
+      if (!n && !d) { ev.preventDefault(); alert('Please enter the rep\'s name or cell number.'); return; }
+      var fn = n || 'Heirloom Roofing Rep';
+      var parts = n.split(/\s+/), last = parts.length > 1 ? parts.pop() : '', first = parts.join(' ') || n;
+      var lines = ['BEGIN:VCARD','VERSION:3.0','N:' + last + ';' + first + ';;;','FN:' + fn,'ORG:Heirloom Roofing LLC'];
+      if (d) lines.push('TEL;TYPE=CELL:+' + d);
+      lines.push('END:VCARD');
+      var blob = new Blob([lines.join('\r\n')], {type:'text/vcard'});
+      this.href = URL.createObjectURL(blob);
+      this.download = (first || 'rep').toLowerCase().replace(/[^a-z0-9]+/g,'-') + '-heirloom-roofing.vcf';
     });
     return;
   }

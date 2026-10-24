@@ -259,6 +259,10 @@
 
   /* kit sheet: constrain long rep values visibly */
   #repname, #repphone1, #repemail { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%; display:block; }
+  .val[contenteditable] { outline:none; cursor:text; }
+  .val[contenteditable]:focus { background:#fff8e8; }
+  .edithint { text-align:center; font-size:8.5pt; font-weight:700; color:#8a6d1f; background:#fdf3df; border:1px dashed #b3780e; border-radius:6px; padding:4px 8px; margin:6px auto 0; max-width:7.2in; }
+  @media print { .edithint { display:none; } }
 </style>
 <script>
 window.addEventListener('load',()=>{
@@ -287,6 +291,7 @@ window.addEventListener('load',()=>{
       <a class="qrcard" href="#" id="lnk-co" style="text-decoration:none;color:inherit;"><img id="qr-co" alt="Company info QR code"><div class="qrcap">COMPANY<br>INFO</div></a>
     </div>
   </div>
+  <div class="edithint">Type your name, cell, and email into the boxes above - the REP INFO code updates as you type - then print or save as PDF. Or just print and write it in.</div>
   <div class="grid">
     <div class="contactcard">
       <span class="ctitle">Your Contractor</span>
@@ -348,10 +353,12 @@ window.addEventListener('load',()=>{
     el.src = qrc.createDataURL(6, 4);
   }
   var BASE = 'https://theleavittgroup.github.io/heirloom/kit/';
-  document.getElementById('repname').textContent = name;
-  document.getElementById('repphone1').textContent = phone ? pretty(phone) : '';
-  document.getElementById('repphone2').textContent = phone ? pretty(phone) : '';
-  document.getElementById('repemail').textContent = email;
+  var nameEl = document.getElementById('repname'), phoneEl = document.getElementById('repphone1'),
+      phone2El = document.getElementById('repphone2'), emailEl = document.getElementById('repemail');
+  nameEl.textContent = name;
+  phoneEl.textContent = phone ? pretty(phone) : '';
+  phone2El.textContent = phone ? pretty(phone) : '';
+  emailEl.textContent = email;
   function fit(el){
     if (!el) return;
     var size = parseFloat(getComputedStyle(el).fontSize), guard = 0;
@@ -359,23 +366,41 @@ window.addEventListener('load',()=>{
       size -= 0.5; el.style.fontSize = size + 'px'; guard++;
     }
   }
-  fit(document.getElementById('repname'));
-  fit(document.getElementById('repphone1'));
-  fit(document.getElementById('repemail'));
+  [nameEl, phoneEl, emailEl].forEach(fit);
   qrTo(document.getElementById('qr-co'), BASE + 'company.html');
   document.getElementById('lnk-co').href = BASE + 'company.html';
-  if (name && phone) {
-    var params = 'n=' + encodeURIComponent(name) + '&p=' + encodeURIComponent(phone);
-    if (email) params += '&e=' + encodeURIComponent(email);
-    var cardUrl = BASE + 'card.html#' + params;
-    qrTo(document.getElementById('qr-rep'), cardUrl);
-    document.getElementById('lnk-rep').href = cardUrl;
-  } else {
-    // Blank sheet: Rep code still works - it opens the rep card, which asks the
-    // homeowner to enter their rep's cell number (nothing is pre-encoded).
-    qrTo(document.getElementById('qr-rep'), BASE + 'card.html');
-    document.getElementById('lnk-rep').href = BASE + 'card.html';
+  var repQr = document.getElementById('qr-rep'), repLnk = document.getElementById('lnk-rep');
+  function refreshRep(){
+    var n = nameEl.textContent.trim(), p = phoneEl.textContent.trim(), e = emailEl.textContent.trim();
+    var digits = p.replace(/\D/g, '');
+    var url;
+    if (n && digits.length >= 10) {
+      url = BASE + 'card.html#n=' + encodeURIComponent(n) + '&p=' + encodeURIComponent(p.replace(/[^\d+]/g, ''));
+      if (e) url += '&e=' + encodeURIComponent(e);
+    } else {
+      // Blank or incomplete: the code opens the rep card's enter-the-number fallback.
+      url = BASE + 'card.html';
+    }
+    qrTo(repQr, url);
+    repLnk.href = url;
+    phone2El.textContent = p;
   }
+  refreshRep();
+  // The slip is also the fill-in page: type straight into the boxes; the Rep code follows.
+  [nameEl, phoneEl, emailEl].forEach(function(el){
+    el.contentEditable = 'true';
+    el.setAttribute('spellcheck', 'false');
+    el.addEventListener('input', function(){
+      el.style.fontSize = '';
+      fit(el);
+      refreshRep();
+    });
+    el.addEventListener('paste', function(ev){
+      ev.preventDefault();
+      var t = (ev.clipboardData || window.clipboardData).getData('text');
+      document.execCommand('insertText', false, t);
+    });
+  });
 })();
 </script>
 </body>
