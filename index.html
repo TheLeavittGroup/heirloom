@@ -33,7 +33,10 @@
     padding:12px 10px; margin-top:8px; border:1px solid var(--navy); background:#fff; color:var(--navy); }
   .altnote { text-align:center; color:var(--muted); font-size:11.5px; font-weight:600; margin-top:6px; line-height:1.45; }
   .note { margin-top:18px; font-size:12px; color:var(--muted); font-weight:600; line-height:1.55; text-align:center; }
-  .secondary { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:16px; }
+  a.bigsave { display:block; text-decoration:none; text-align:center; font-weight:800; font-size:16px; border-radius:12px;
+    padding:15px 10px; margin-top:18px; background:linear-gradient(135deg,#e3b93a,#c9a227); color:#3a2f05; }
+  a.bigsave small { display:block; font-weight:700; font-size:12px; margin-top:3px; }
+  .secondary { display:grid; grid-template-columns:1fr; gap:10px; margin-top:12px; }
   a.sec { display:block; text-decoration:none; text-align:center; font-weight:700; font-size:13px; border-radius:12px;
     padding:12px 8px; border:1px solid #d8cfbc; background:#fff; color:var(--muted); }
   .err { color:#a33; font-size:12px; font-weight:700; margin-top:8px; text-align:center; display:none; }
@@ -77,8 +80,8 @@
     </div>
 
     <div class="note">Every button opens your own email or text app with the message ready - you review it and tap send. Your email address or phone number comes with it automatically.</div>
+    <a class="bigsave" href="card.html">Save Aidan's Contact<small>One tap - adds him straight to your phone</small></a>
     <div class="secondary">
-      <a class="sec" href="card.html">Save Aidan's Contact</a>
       <a class="sec" href="company.html">Company &amp; License Info</a>
     </div>
   </div>
