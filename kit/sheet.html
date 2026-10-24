@@ -258,6 +258,9 @@
 
   /* kit sheet: blank rep QR placeholder */
   .qrcard .blankbox { width:0.92in; height:0.92in; border:2px dashed #b9c4d0; border-radius:6px; }
+
+  /* kit sheet: constrain long rep values visibly */
+  #repname, #repphone1, #repemail { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%; display:block; }
 </style>
 <script>
 window.addEventListener('load',()=>{
@@ -351,6 +354,16 @@ window.addEventListener('load',()=>{
   document.getElementById('repphone1').textContent = phone ? pretty(phone) : '';
   document.getElementById('repphone2').textContent = phone ? pretty(phone) : '';
   document.getElementById('repemail').textContent = email;
+  function fit(el){
+    if (!el) return;
+    var size = parseFloat(getComputedStyle(el).fontSize), guard = 0;
+    while (el.scrollWidth > el.clientWidth && size > 7 && guard < 40) {
+      size -= 0.5; el.style.fontSize = size + 'px'; guard++;
+    }
+  }
+  fit(document.getElementById('repname'));
+  fit(document.getElementById('repphone1'));
+  fit(document.getElementById('repemail'));
   qrTo(document.getElementById('qr-co'), BASE + 'company.html');
   document.getElementById('lnk-co').href = BASE + 'company.html';
   if (name && phone) {
