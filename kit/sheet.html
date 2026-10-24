@@ -256,8 +256,6 @@
   .sd { font-size:7.6pt; line-height:1.14; margin-top:1px; }
   .caveat { font-size:8.2pt; margin-top:3px; }
 
-  /* kit sheet: blank rep QR placeholder */
-  .qrcard .blankbox { width:0.92in; height:0.92in; border:2px dashed #b9c4d0; border-radius:6px; }
 
   /* kit sheet: constrain long rep values visibly */
   #repname, #repphone1, #repemail { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%; display:block; }
@@ -373,10 +371,10 @@ window.addEventListener('load',()=>{
     qrTo(document.getElementById('qr-rep'), cardUrl);
     document.getElementById('lnk-rep').href = cardUrl;
   } else {
-    var img = document.getElementById('qr-rep');
-    var box = document.createElement('div'); box.className = 'blankbox';
-    img.parentNode.replaceChild(box, img);
-    document.getElementById('lnk-rep').removeAttribute('href');
+    // Blank sheet: Rep code still works - it opens the rep card, which asks the
+    // homeowner to enter their rep's cell number (nothing is pre-encoded).
+    qrTo(document.getElementById('qr-rep'), BASE + 'card.html');
+    document.getElementById('lnk-rep').href = BASE + 'card.html';
   }
 })();
 </script>
