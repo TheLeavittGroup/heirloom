@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Heirloom Roofing | Send Your Adjustment Date or Estimate</title>
+<meta name="description" content="Two things keep your Heirloom Roofing claim moving: your adjustment date and your insurer's estimate. Send them here.">
+<style>
+  :root { --navy:#014F89; --navy-deep:#0b3252; --blue:#0161A8; --gold:#c9a227; --ink:#1c2b36; --muted:#5a6b78; --paper:#f7f5f0; }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; background:var(--paper); color:var(--ink);
+    font-family:-apple-system,Helvetica,Arial,sans-serif; }
+  .band { background:linear-gradient(150deg,var(--navy-deep),var(--navy) 60%,var(--blue));
+    padding:24px 20px 66px; border-bottom:4px solid var(--gold); text-align:center; }
+  .band img { width:110px; height:110px; object-fit:contain; background:#fff; border-radius:22px; padding:8px;
+    box-shadow:0 14px 34px rgba(0,0,0,.32); }
+  main { max-width:460px; margin:-40px auto 0; padding:0 20px 30px; }
+  .cardbox { border-radius:22px; padding:26px 22px; background:#fff; border:1px solid #e3ddd0;
+    box-shadow:0 18px 44px rgba(11,50,82,.16); }
+  h1 { font-family:Georgia,'Times New Roman',serif; margin:0; font-size:26px; color:var(--navy-deep); text-align:center; }
+  .sub { text-align:center; color:var(--muted); font-size:14px; font-weight:600; margin-top:8px; line-height:1.5; }
+  .action { margin-top:18px; border:1px solid #e3ddd0; border-radius:16px; padding:16px 16px 14px; background:#fdfaf2; }
+  .action h2 { font-family:Georgia,'Times New Roman',serif; font-size:19px; color:var(--navy-deep); margin:0 0 4px; }
+  .action p { margin:0 0 12px; font-size:13px; color:var(--muted); font-weight:600; line-height:1.5; }
+  label { display:block; font-size:12px; font-weight:800; color:var(--navy-deep); margin:10px 0 4px; }
+  input { width:100%; padding:12px 12px; font-size:16px; border:1px solid #d8cfbc; border-radius:10px; background:#fff; color:var(--ink); font-family:inherit; }
+  input:focus { outline:2px solid var(--blue); border-color:var(--blue); }
+  .row { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  button.go { display:block; width:100%; cursor:pointer; text-align:center; font-weight:800; font-size:16px; border-radius:12px;
+    padding:14px 10px; margin-top:12px; background:linear-gradient(135deg,#e3b93a,var(--gold)); color:#3a2f05; border:none; font-family:inherit; }
+  button.go small { display:block; font-weight:700; font-size:12px; margin-top:3px; }
+  a.alt { display:block; text-decoration:none; text-align:center; font-weight:800; font-size:14px; border-radius:12px;
+    padding:12px 10px; margin-top:8px; border:1px solid var(--navy); background:#fff; color:var(--navy); }
+  .altnote { text-align:center; color:var(--muted); font-size:11.5px; font-weight:600; margin-top:6px; line-height:1.45; }
+  .note { margin-top:18px; font-size:12px; color:var(--muted); font-weight:600; line-height:1.55; text-align:center; }
+  .secondary { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:16px; }
+  a.sec { display:block; text-decoration:none; text-align:center; font-weight:700; font-size:13px; border-radius:12px;
+    padding:12px 8px; border:1px solid #d8cfbc; background:#fff; color:var(--muted); }
+  .err { color:#a33; font-size:12px; font-weight:700; margin-top:8px; text-align:center; display:none; }
+</style>
+</head>
+<body>
+<div class="band">
+  <img src="heirloom-logo.png" alt="Heirloom Roofing logo">
+</div>
+<main>
+  <div class="cardbox">
+    <h1>Keep Your Claim Moving</h1>
+    <div class="sub">Your roofer needs two things from your insurance company. You choose what goes out - nothing sends on its own.</div>
+
+    <div class="action">
+      <h2>1. Your Adjustment Date</h2>
+      <p>The day and time the insurance adjuster visits your home. Fill these in and tap send - it opens your email ready to go.</p>
+      <label for="adj-name">Your name</label>
+      <input id="adj-name" type="text" autocomplete="name" placeholder="Jane Miller">
+      <label for="adj-addr">Property address</label>
+      <input id="adj-addr" type="text" autocomplete="street-address" placeholder="1234 E Camelback Rd, Phoenix">
+      <div class="row">
+        <div><label for="adj-date">Date</label><input id="adj-date" type="date"></div>
+        <div><label for="adj-time">Time</label><input id="adj-time" type="time"></div>
+      </div>
+      <button class="go" onclick="sendAdjustment()">Send My Adjustment Date<small>Opens your email with everything filled in</small></button>
+      <div class="err" id="adj-err">Please fill in your name, address, and the date.</div>
+      <a class="alt" href="sms:+19599298585?&body=Hi%20Aidan%2C%20this%20is%20___%20at%20___.%20My%20insurance%20adjustment%20is%20scheduled%20for%20___.">Text it instead</a>
+      <div class="altnote">Use email so we can track what arrives. Texts reach Aidan but can't be tracked here.</div>
+    </div>
+
+    <div class="action">
+      <h2>2. Your Insurer's Estimate</h2>
+      <p>The original email or PDF from your insurance company. On the next screen, attach the PDF or forward the insurer's message - the original document, not a retype.</p>
+      <label for="est-name">Your name</label>
+      <input id="est-name" type="text" autocomplete="name" placeholder="Jane Miller">
+      <label for="est-addr">Property address</label>
+      <input id="est-addr" type="text" autocomplete="street-address" placeholder="1234 E Camelback Rd, Phoenix">
+      <button class="go" onclick="sendEstimate()">Send My Estimate<small>Opens your email - then attach the PDF or forward the insurer's message</small></button>
+      <div class="err" id="est-err">Please fill in your name and address.</div>
+    </div>
+
+    <div class="note">Every button opens your own email or text app with the message ready - you review it and tap send. Your email address or phone number comes with it automatically.</div>
+    <div class="secondary">
+      <a class="sec" href="card.html">Save Aidan's Contact</a>
+      <a class="sec" href="company.html">Company &amp; License Info</a>
+    </div>
+  </div>
+</main>
+<script>
+var INTAKE = 'aidanleavitt.ops@gmail.com';
+function val(id){ return document.getElementById(id).value.trim(); }
+function fmtDate(d){
+  if(!d) return '';
+  var p = d.split('-');
+  var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  return months[parseInt(p[1],10)-1] + ' ' + parseInt(p[2],10) + ', ' + p[0];
+}
+function fmtTime(t){
+  if(!t) return '';
+  var p = t.split(':'); var h = parseInt(p[0],10); var m = p[1];
+  var ap = h >= 12 ? 'PM' : 'AM'; h = h % 12; if(h === 0) h = 12;
+  return h + ':' + m + ' ' + ap + ' Arizona time';
+}
+function openMail(subject, body){
+  window.location.href = 'mailto:' + INTAKE + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+}
+function sendAdjustment(){
+  var name = val('adj-name'), addr = val('adj-addr'), d = val('adj-date'), t = val('adj-time');
+  if(!name || !addr || !d){ document.getElementById('adj-err').style.display = 'block'; return; }
+  document.getElementById('adj-err').style.display = 'none';
+  var when = fmtDate(d) + (t ? ' at ' + fmtTime(t) : ' (time to be confirmed)');
+  var body = 'ADJUSTMENT DATE\nName: ' + name + '\nAddress: ' + addr + '\nAdjustment: ' + when + '\n\nSent from the Heirloom Roofing claim page.';
+  openMail('Adjustment date - ' + addr, body);
+}
+function sendEstimate(){
+  var name = val('est-name'), addr = val('est-addr');
+  if(!name || !addr){ document.getElementById('est-err').style.display = 'block'; return; }
+  document.getElementById('est-err').style.display = 'none';
+  var body = 'INSURER ESTIMATE\nName: ' + name + '\nAddress: ' + addr + '\n\nATTACH the insurer\'s estimate PDF, or FORWARD the insurer\'s original email below this line.\n\nSent from the Heirloom Roofing claim page.';
+  openMail('Insurer estimate - ' + addr, body);
+}
+</script>
+</body>
+</html>
