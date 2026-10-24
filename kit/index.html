@@ -57,7 +57,8 @@
         <div class="qrbox"><img id="qr-rep" alt="Rep info QR code"><b>Rep Info</b></div>
         <div class="qrbox"><img id="qr-co" alt="Company info QR code"><b>Company Info</b></div>
       </div>
-      <button class="print" onclick="window.print()">Print This Sheet</button>
+      <a class="print" id="sheetlink" href="#" style="display:block;text-decoration:none;text-align:center;">Open My Full Printable Sheet</a>
+      <button class="print" onclick="window.print()">Print Codes Only</button>
       <div class="fineprint">Rep info code opens your contact card. Company info code opens the company page.<br>Printed codes keep working as long as these pages stay up.</div>
     </div>
   </div>
@@ -80,6 +81,7 @@
     if (e) params += '&e=' + encodeURIComponent(e);
     qrTo(document.getElementById('qr-rep'), BASE + 'card.html#' + params);
     qrTo(document.getElementById('qr-co'), BASE + 'company.html');
+    document.getElementById('sheetlink').href = BASE + 'sheet.html#' + params;
     document.getElementById('codes').style.display = 'block';
     document.getElementById('codes').scrollIntoView({behavior:'smooth'});
   });
