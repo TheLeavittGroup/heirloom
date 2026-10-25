@@ -21,7 +21,7 @@
   .lede { text-align:center; color:var(--muted); font-weight:700; font-size:14px; margin-bottom:18px; }
   h2 { font-size:15px; color:var(--navy); margin:16px 0 6px; }
   p, li { font-size:14px; line-height:1.55; }
-  ul { padding-left:20px; margin:6px 0; }
+  ul, ol { padding-left:20px; margin:6px 0; }
   .warn { border:1px solid #e3ddd0; border-left:5px solid var(--gold); border-radius:12px; padding:12px 14px;
     background:#fdfaf2; font-size:13.5px; line-height:1.5; margin-top:14px; }
   a.go { display:block; margin-top:20px; text-decoration:none; text-align:center; font-weight:800; font-size:17px;
@@ -40,23 +40,39 @@
     <div class="lede">Optional - set up together with your rep</div>
 
     <h2>What it does</h2>
-    <p>When your insurance company emails about your claim - like the adjustment date or the estimate - a copy goes to your Heirloom Roofing rep automatically.</p>
-    <p>Copies are sent by our service address, <b>aidanleavitt.ops@gmail.com</b> - never from your address - and go only to Aidan's roofing inbox at that same address.</p>
+    <p>When your insurance company emails about your claim - like the adjustment date or the estimate - a copy goes to your Heirloom Roofing rep automatically. There are two ways to set this up, depending on which email you use. Your rep will help you pick.</p>
 
+    <h2>If you use Gmail (Google) - the button below is for Gmail only</h2>
+    <p>Copies are sent by our service address, <b>aidanleavitt.ops@gmail.com</b> - never from your address - and go only to Aidan's roofing inbox at that same address.</p>
     <h2>What you'll see next</h2>
     <ul>
       <li>A Google sign-in screen for a connection service called <b>UNIPILE</b>.</li>
       <li>Google shows checkboxes - this setup only needs <b>"View your email messages and settings"</b>. Leave the others unchecked.</li>
     </ul>
     <div class="warn">That read permission covers your <b>whole mailbox</b> - Google doesn't offer a claims-only option. The connection service can read your mailbox, but this setup relays only email that <b>arrives after you connect</b> and matches <b>your claim</b>: your insurance company and claim details, which you confirm during setup. Older email and non-matching email are not relayed. You approve it yourself, and you can say no.</div>
+    <p style="font-size:13px;color:var(--muted);margin-top:14px;">You can turn this off later in your Google account under Security &gt; Third-party access.</p>
+    <a class="go" href="https://heirloom-intake.aidanleavitt-ops.workers.dev/connect">Continue to email sign-in</a>
 
-    <h2>Prefer not to connect?</h2>
+    <h2>If you use Outlook.com or iCloud Mail</h2>
+    <p>Another option: your own email can forward only your claim emails - no app, no sign-in with us, and no outside service gets access to your mailbox. Together with your rep, you add one rule in your own email settings so that when an email arrives from your insurance company, a copy is forwarded to <b>aidanleavitt.ops@gmail.com</b>. Only messages that match the rule you set are forwarded.</p>
+    <p><i>This option is new and has not yet been tried with a real homeowner, so your rep will set it up with you and check that your first forwarded claim email arrives.</i></p>
+    <p><b>Outlook.com:</b></p>
+    <ol>
+      <li>Open Settings &gt; Mail &gt; Rules, then Add new rule.</li>
+      <li>Add a condition: the sender is your insurance company's email address. If you have your claim number, your rep may add a second condition - "Subject contains" that number - so only that claim's emails forward.</li>
+      <li>Add the action <b>Forward to</b>: aidanleavitt.ops@gmail.com, then Save.</li>
+    </ol>
+    <p><b>iCloud Mail</b> (at icloud.com/mail):</p>
+    <ol>
+      <li>Open Settings &gt; Rules and add a rule.</li>
+      <li>Set the condition: the message is from your insurance company's email address. (Or use your claim number in the subject as the condition instead.)</li>
+      <li>Set the action to forward to aidanleavitt.ops@gmail.com, then Add.</li>
+    </ol>
+    <p style="font-size:13px;color:var(--muted);margin-top:10px;">You can turn this off anytime by deleting the rule - your rep can help, including at the 30-day check-in. (Work or school email accounts sometimes block forwarding set by their organization.)</p>
+
+    <h2>Yahoo, AOL, another email, or prefer not to set up?</h2>
     <p>No problem - just forward claim emails to your rep when they arrive.</p>
 
-    <!-- TODO: point to the link-minting backend endpoint once it exists (hosted links expire daily; cannot hardcode) -->
-    <p style="font-size:13px;color:var(--muted);margin-top:14px;">You can turn this off later in your Google account under Security &gt; Third-party access.</p>
-    <!-- TODO: point to the link-minting backend endpoint once it exists (hosted links expire daily; cannot hardcode) -->
-    <a class="go" href="https://heirloom-intake.aidanleavitt-ops.workers.dev/connect">Continue to email sign-in</a>
     <a class="back" href="card.html">Not now - back to contact card</a>
   </div>
   <footer>Heirloom Roofing LLC - Licensed Arizona contractor ROC 366805</footer>
