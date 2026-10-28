@@ -44,6 +44,9 @@
     border-radius:12px; padding:14px 10px; border:2px dashed var(--gold); background:#fdfaf2; color:var(--navy-deep); transition:.18s; }
   a.setupbtn:hover { background:var(--gold); color:#3a2f05; }
   .setupnote { color:var(--muted); font-size:12px; font-weight:600; margin-top:6px; line-height:1.45; }
+  .shareback label { display:block; text-align:left; font-size:11px; font-weight:800; color:var(--muted); letter-spacing:.06em; text-transform:uppercase; margin:12px 0 5px; }
+  .shareback input { width:100%; padding:12px 14px; font-size:16px; border:1.5px solid #d8d2c4; border-radius:12px; background:#fbfaf7; color:var(--ink); }
+  .sharetitle { font-weight:800; color:var(--navy-deep); font-size:15px; }
   .share { margin-top:14px; text-align:center; }
   a.sharebtn { display:block; background:var(--navy); color:#fff; border:none; font-size:16px; }
   a.sharebtn:hover { background:var(--blue); color:#fff; }
@@ -66,6 +69,17 @@
       <a class="btn" href="mailto:aidan@heirloomroofing.com">Email</a>
       <a class="btn" href="https://heirloomroofing.com">Website</a>
     </div>
+    <div class="share" style="text-align:left; border-top:1px solid #eee6d4; margin-top:18px; padding-top:16px;">
+      <div class="sharetitle" style="text-align:center;">Share your contact with Aidan</div>
+      <div class="shareback">
+        <label for="hname">Your name</label>
+        <input id="hname" type="text" placeholder="First and last name" autocomplete="name">
+        <label for="hcell">Your cell number</label>
+        <input id="hcell" type="tel" placeholder="So Aidan can save you back" autocomplete="tel">
+      </div>
+      <a class="btn sharebtn" id="sharebackbtn" href="#" style="margin-top:12px;">Text Aidan my contact</a>
+      <div class="sharenote">Opens your Messages app with your name and number filled in - review it and press send. Nothing is collected or stored by this page.</div>
+    </div>
     <a class="setupbtn" href="connect.html">Set up roof-claim updates</a>
     <div class="setupnote">Read-only email access. Select only "View your email messages and settings" - no sending or deleting permission needed.</div>
     </div>
@@ -78,5 +92,20 @@
   </div>
   <footer>Heirloom Roofing LLC - <a href="company.html" style="color:var(--navy)">License &amp; company info</a></footer>
 </main>
+
+<script>
+(function(){
+  var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  function smsHref(body){ return 'sms:+19599298585' + (isIOS ? '?&body=' : '?body=') + encodeURIComponent(body); }
+  document.getElementById('sharebackbtn').addEventListener('click', function(ev){
+    var n = document.getElementById('hname').value.trim();
+    var c = document.getElementById('hcell').value.trim();
+    if (!n) { ev.preventDefault(); alert('Please type your name so Aidan knows who it is.'); return; }
+    var body = 'Hi Aidan, this is ' + n + (c ? ' - my cell is ' + c : '') + '. You just shared your Heirloom Roofing contact with me about my roof.';
+    this.href = smsHref(body);
+  });
+})();
+</script>
 </body>
 </html>
+
