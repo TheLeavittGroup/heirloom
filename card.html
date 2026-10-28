@@ -78,7 +78,8 @@
         <input id="hcell" type="tel" placeholder="So Aidan can save you back" autocomplete="tel">
       </div>
       <a class="btn sharebtn" id="sharebackbtn" href="#" style="margin-top:12px;">Text Aidan my contact</a>
-      <div class="sharenote">Opens your Messages app with your name and number filled in - review it and press send. Nothing is collected or stored by this page.</div>
+      <a class="btn sharebtn" id="sharecardbtn" href="#" style="display:none; margin-top:10px; background:linear-gradient(135deg,#e3b93a,var(--gold)); color:#3a2f05;">Send as a contact card instead</a>
+      <div class="sharenote">The text option opens Messages with your name and number filled in - review it and press send.<span id="cardnote" style="display:none"> The contact-card option opens your phone's share menu: pick Messages, then Aidan.</span> Nothing is collected or stored by this page.</div>
     </div>
     <a class="setupbtn" href="connect.html">Set up roof-claim updates</a>
     <div class="setupnote">Read-only email access. Select only "View your email messages and settings" - no sending or deleting permission needed.</div>
@@ -88,9 +89,13 @@
         Verify License - ROC 366805 &#8599;
         <small>Heirloom Roofing LLC (CR-42 Roofing) - AZ Registrar of Contractors</small>
       </a>
+      <a class="prooflink" href="company.html" style="margin-top:10px; background:var(--blue); color:#fff; font-size:17px; padding:17px 12px;">
+        About Heirloom Roofing - License &amp; Company Info
+        <small style="color:#dbe6f0;">AZ ROC 366805 - license, bond and insurance details</small>
+      </a>
     </div>
   </div>
-  <footer>Heirloom Roofing LLC - <a href="company.html" style="color:var(--navy)">License &amp; company info</a></footer>
+  <footer>Heirloom Roofing LLC</footer>
 </main>
 
 <script>
@@ -104,6 +109,28 @@
     var body = 'Hi Aidan, this is ' + n + (c ? ' - my cell is ' + c : '') + '. You just shared your Heirloom Roofing contact with me about my roof.';
     this.href = smsHref(body);
   });
+  (function(){
+    var btn = document.getElementById('sharecardbtn');
+    if (!window.File || !navigator.canShare) return;
+    var test;
+    try { test = new File(['BEGIN:VCARD\r\nVERSION:3.0\r\nFN:x\r\nEND:VCARD'], 'x.vcf', {type:'text/vcard'}); } catch(e){ return; }
+    try { if (!navigator.canShare({files:[test]})) return; } catch(e){ return; }
+    btn.style.display = 'block';
+    document.getElementById('cardnote').style.display = 'inline';
+    btn.addEventListener('click', function(ev){
+      ev.preventDefault();
+      var n = document.getElementById('hname').value.trim();
+      var c = document.getElementById('hcell').value.trim();
+      if (!n) { alert('Please type your name so Aidan knows who it is.'); return; }
+      var parts = n.split(/\s+/), last = parts.length>1?parts.pop():'', first = parts.join(' ')||n;
+      var d = c.replace(/\D/g,''); if (d.length===10) d='1'+d;
+      var lines = ['BEGIN:VCARD','VERSION:3.0','N:'+last+';'+first+';;;','FN:'+n];
+      if (d) lines.push('TEL;TYPE=CELL:+'+d);
+      lines.push('END:VCARD');
+      var f = new File([lines.join('\r\n')], n.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'.vcf', {type:'text/vcard'});
+      navigator.share({files:[f], title:n, text:'My contact card - '+n}).catch(function(){});
+    });
+  })();
 })();
 </script>
 </body>
